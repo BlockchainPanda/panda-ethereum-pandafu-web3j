@@ -897,8 +897,8 @@ Thumbs.db
 # End of https://www.toptal.com/developers/gitignore/api/java,java-web,code-java,scala,jboss,jboss4,jboss6,maven,gradle,intellij,intellij+all,intellij+iml,netbeans,eclipse,bluej,jetbrains,jetbrains+all,jetbrains+iml,grails,androidstudio,python,powershell
 
 commands.txt
-.idea
-.mvn
+/.idea
+/.mvn
 mvnw
 mvnw.cmd
 .mvn/wrapper
