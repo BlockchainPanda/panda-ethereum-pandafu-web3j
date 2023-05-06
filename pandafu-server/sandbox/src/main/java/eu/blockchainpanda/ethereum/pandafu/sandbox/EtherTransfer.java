@@ -3,6 +3,7 @@ package eu.blockchainpanda.ethereum.pandafu.sandbox;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.exceptions.TransactionException;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.Transfer;
 import org.web3j.utils.Convert;
@@ -33,12 +34,15 @@ public class EtherTransfer {
         try {
             receipt = Transfer.sendFunds(web3j, credentials, toAddress, amount, Convert.Unit.ETHER).send();
 
-            // Print the transaction hash
-            System.out.println("Transaction hash: " + receipt.getTransactionHash());
-            System.out.println("Block Number: " + receipt.getBlockNumber());
-            System.out.println("Block hash: " + receipt.getBlockHash());
-            System.out.println("Gas Used: " + receipt.getGasUsed());
-
+            if (receipt.isStatusOK()) {
+                // Print the transaction hash
+                System.out.println("Transaction hash: " + receipt.getTransactionHash());
+                System.out.println("Block Number: " + receipt.getBlockNumber());
+                System.out.println("Block hash: " + receipt.getBlockHash());
+                System.out.println("Gas Used: " + receipt.getGasUsed());
+            } else {
+                throw new TransactionException("Transaction failed with status: " + receipt.getStatus());
+            }
         } catch (RuntimeException e) {
             if (e.getMessage().contains("insufficient funds")) {
                 // Handle insufficient funds exception here
@@ -47,7 +51,5 @@ public class EtherTransfer {
                  System.out.println("Oops: " + e.getMessage());
             }
         }
-
-
     }
 }

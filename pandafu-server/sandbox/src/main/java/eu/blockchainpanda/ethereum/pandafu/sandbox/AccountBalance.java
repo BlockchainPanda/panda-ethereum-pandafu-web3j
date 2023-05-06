@@ -5,6 +5,7 @@ import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
+import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Convert;
 
@@ -30,10 +31,15 @@ public class AccountBalance {
         EthGetBalance ethGetBalance = web3j.ethGetBalance(credentials.getAddress(), DefaultBlockParameterName.LATEST).send();
         BigInteger weiBalance = ethGetBalance.getBalance();
 
+        // Get the number of transactions received
+        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(credentials.getAddress(), DefaultBlockParameterName.LATEST).send();
+        BigInteger transactionCount = ethGetTransactionCount.getTransactionCount();
+
         BigDecimal weiBalanceD = new BigDecimal(weiBalance);
         System.out.println("Balance in WEI: " + weiBalance);
         BigDecimal etherBalance = Convert.fromWei(weiBalanceD, Convert.Unit.ETHER);
         System.out.println("Balance in ETH: " + etherBalance);
+        System.out.println("Number of Transactions Received: " + transactionCount);
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -50,11 +56,14 @@ public class AccountBalance {
         ethGetBalance = web3j.ethGetBalance(walletFileData.getAddress(), DefaultBlockParameterName.LATEST).send();
         weiBalance = ethGetBalance.getBalance();
 
+        // Get the number of transactions received
+        ethGetTransactionCount = web3j.ethGetTransactionCount(walletFileData.getAddress(), DefaultBlockParameterName.LATEST).send();
+        transactionCount = ethGetTransactionCount.getTransactionCount();
+
         weiBalanceD = new BigDecimal(weiBalance);
         System.out.println("Balance in WEI: " + weiBalance);
         etherBalance = Convert.fromWei(weiBalanceD, Convert.Unit.ETHER);
         System.out.println("Balance in ETH: " + etherBalance);
-
-
+        System.out.println("Number of Transactions Received: " + transactionCount);
     }
 }
