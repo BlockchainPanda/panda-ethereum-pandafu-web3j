@@ -1,4 +1,4 @@
-package generated;
+package eu.blockchainpanda.ethereum.pandafu.contracts.generated;
 
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
