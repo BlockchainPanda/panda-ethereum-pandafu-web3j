@@ -1,6 +1,8 @@
 package eu.blockchainpanda.ethereum.pandafu.contracts.extended;
 
 import org.springframework.core.io.ClassPathResource;
+import org.web3j.abi.FunctionEncoder;
+import org.web3j.abi.datatypes.Address;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
@@ -11,6 +13,7 @@ import org.web3j.utils.Convert;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 class ExampleConstructorContractTest {
     private static final BigInteger GAS_LIMIT = BigInteger.valueOf(5000000);
@@ -42,6 +45,8 @@ class ExampleConstructorContractTest {
 
         ContractGasProvider gasProvider = new StaticGasProvider(GAS_PRICE, GAS_LIMIT);
 
-        ExampleConstructorContract contract = ExampleConstructorContract.deploy(web3j, credentials, gasProvider, contractBin).send();
+        String encodedConstructor = FunctionEncoder.encodeConstructor(Arrays.asList(new Address(credentials.getAddress())));
+
+        ExampleConstructorContract contract = ExampleConstructorContract.deploy(web3j, credentials, gasProvider, contractBin, encodedConstructor).send();
     }
 }
