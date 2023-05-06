@@ -18,6 +18,7 @@
 		<module>sandbox</module>
 		<module>commons</module>
 		<module>application</module>
+		<module>contracts</module>
 	</modules>
 	<properties>
 		<java.version>17</java.version>
@@ -42,7 +43,13 @@
 		<dependency>
 			<groupId>org.web3j</groupId>
 			<artifactId>core</artifactId>
-			<version>5.0.0</version>
+			<version>4.9.8</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.7</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
@@ -58,6 +65,45 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.web3j</groupId>
+				<artifactId>web3j-maven-plugin</artifactId>
+				<version>4.9.8</version>
+				<configuration>
+					<packageName>generated</packageName>
+					<sourceDestination>src/main/java/generated</sourceDestination>
+					<nativeJavaType>true</nativeJavaType>
+					<outputFormat>java,abi,bin</outputFormat>
+					<soliditySourceFiles>
+						<directory>src/main/resources</directory>
+						<includes>
+							<include>**/*.sol</include>
+						</includes>
+					</soliditySourceFiles>
+				    <abiSourceFiles>
+						<directory>src/main/resources</directory>
+						<includes>
+							<include>**/*.json</include>
+						</includes>
+					</abiSourceFiles>
+					<outputDirectory>
+						<java>src/main/java/eu/blockchainpanda/ethereum/pandafu/contracts</java>
+						 <bin>src/main/resources</bin>
+						 <abi>src/main/resources</abi>
+					</outputDirectory>
+					<contract>
+						<includes>
+							<include>greeter</include>
+						</includes>
+						<excludes>
+							<exclude>mortal</exclude>
+						</excludes>
+					</contract>
+					<pathPrefixes>
+						<pathPrefix>dep=../dependencies</pathPrefix>
+					</pathPrefixes>
 				</configuration>
 			</plugin>
 		</plugins>
