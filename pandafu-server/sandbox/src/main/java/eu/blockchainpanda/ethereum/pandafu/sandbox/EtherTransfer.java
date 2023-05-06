@@ -16,24 +16,38 @@ public class EtherTransfer {
         Web3j web3j = Web3j.build(new HttpService("http://localhost:7545"));
 
         // Load the sender's Ethereum account private key
-        String privateKey = "0x9531c65071ea3c9ee89db4ab27b58acd213a9a35f37767acd54e64dc511efe56";
+        String privateKey = "545b7748031eadb709ba541b650405e04d41b60735a33f79472f8a352a66889f";
 
         // Create a Credentials object to sign transactions with the sender's private key
         Credentials credentials = Credentials.create(privateKey);
 
         // Define the recipient's Ethereum account address
-        String toAddress = "0x3c7a84081DBde87d751f4DD6A559cD803df0A939";
+        String toAddress = "0x5279c4899A511Ff2192e62E08f0257FC277e8A1A";
 
         // Define the amount of Ether to send
-        BigDecimal amount = new BigDecimal("0.5");
+        BigDecimal amount = new BigDecimal("1000.01");
 
         // Send the Ether using the Transfer.sendFunds method
-        TransactionReceipt receipt = Transfer.sendFunds(web3j, credentials, toAddress, amount, Convert.Unit.ETHER).send();
+        TransactionReceipt receipt;
 
-        // Print the transaction hash
-        System.out.println("Transaction hash: " + receipt.getTransactionHash());
-        System.out.println("Block Number: " + receipt.getBlockNumber());
-        System.out.println("Block hash: " + receipt.getBlockHash());
-        System.out.println("Gas Used: " + receipt.getGasUsed());
+        try {
+            receipt = Transfer.sendFunds(web3j, credentials, toAddress, amount, Convert.Unit.ETHER).send();
+
+            // Print the transaction hash
+            System.out.println("Transaction hash: " + receipt.getTransactionHash());
+            System.out.println("Block Number: " + receipt.getBlockNumber());
+            System.out.println("Block hash: " + receipt.getBlockHash());
+            System.out.println("Gas Used: " + receipt.getGasUsed());
+
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("insufficient funds")) {
+                // Handle insufficient funds exception here
+                System.out.println("Oops: " + "insufficient funds for gas * price + value");
+            } else {
+                 System.out.println("Oops: " + e.getMessage());
+            }
+        }
+
+
     }
 }
