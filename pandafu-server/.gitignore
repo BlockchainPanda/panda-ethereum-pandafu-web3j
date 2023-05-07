@@ -904,3 +904,4 @@ mvnw.cmd
 .mvn/wrapper
 /sandbox/src/main/resources/test/
 .mvn
+/.mvn/
