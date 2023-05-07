@@ -15,10 +15,12 @@
 	<name>Ethereum Panda-fu</name>
 	<description>A library leveraging Web3j for implementing basic transactions on Ethereum mainnet and testnets. </description>
 	<modules>
-		<module>sandbox</module>
 		<module>commons</module>
+		<module>wallet</module>
+		<module>sandbox</module>
 		<module>application</module>
 		<module>contracts</module>
+
 	</modules>
 	<properties>
 		<java.version>17</java.version>
@@ -43,7 +45,7 @@
 		<dependency>
 			<groupId>org.web3j</groupId>
 			<artifactId>core</artifactId>
-			<version>5.0.0</version>
+			<version>4.9.8</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -56,6 +58,12 @@
 			<artifactId>javafx-base</artifactId>
 			<version>20.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
